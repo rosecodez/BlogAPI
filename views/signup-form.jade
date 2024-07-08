@@ -1,0 +1,19 @@
+extends layout
+
+block content
+  h6 Don't have an account?
+  a#log-in(href='/users/signup') Sign up
+  h2 Signup
+    form#signupForm(method="POST", action="/users/signup")
+      .form-group
+        label.form-label(for="username") Username
+        input.form-control(type="text", id="username", name="username", required)
+      .form-group
+        label(for="password") Password
+        input.form-control(type="password", id="password", name="password", required)
+      button.btn.btn-primary(type="submit") Sign
+      
+  if errors && errors.length > 0
+          ul.text-danger
+              each error in errors
+                  li= error.msg

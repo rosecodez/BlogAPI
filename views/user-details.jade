@@ -1,0 +1,10 @@
+extends layout
+
+block content
+  if user
+    h3 Hello, #{user.username}!
+    a(href="/users/logout") Log out
+    br
+    if user.author
+      a.user-details-links(href='/users/new-post') New post
+      br
