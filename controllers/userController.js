@@ -97,16 +97,19 @@ passport.use(
     try {
       const user = await User.findOne({ username });
       if (!user) {
+        console.log("Login failed: incorrect username");
         return done(null, false, {
           message: "Incorrect username or password.",
         });
       }
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) {
+        console.log("Login failed: incorrect password");
         return done(null, false, {
           message: "Incorrect username or password.",
         });
       }
+      console.log("Login successful");
       return done(null, user);
     } catch (err) {
       return done(err);
@@ -128,29 +131,45 @@ passport.deserializeUser(async (id, done) => {
 });
 
 exports.loginUser = asyncHandler((req, res) => {
+  console.log("Rendering login form");
   res.render("login-form");
 });
 
-exports.loginUserPost = [
-  passport.authenticate("local", {
-    successRedirect: "/users/user-details",
-    failureRedirect: "/users/login",
-  }),
-];
+exports.loginUserPost = asyncHandler(async (req, res, next) => {
+  passport.authenticate("local", (err, user, info) => {
+    if (err) {
+      return next(err);
+    }
+    if (!user) {
+      console.log("Login failed:", info.message);
+      return res.redirect("/users/login");
+    }
+    req.logIn(user, (err) => {
+      if (err) {
+        return next(err);
+      }
+      console.log("Login successful");
+      return res.redirect("/users/user-details");
+    });
+  })(req, res, next);
+});
 
 exports.logoutUser = asyncHandler(async (req, res, next) => {
   req.logout(function (err) {
     if (err) {
       return next(err);
     }
+    console.log("User logged out, redirecting to home");
     res.redirect("/");
   });
 });
 
 exports.userDetails = (req, res) => {
   if (req.isAuthenticated()) {
+    console.log(`User details accessed for user: ${req.user.username}`);
     res.render("user-details", { user: req.user });
   } else {
+    console.log("User not authenticated, redirecting to login");
     res.redirect("/users/login");
   }
 };
