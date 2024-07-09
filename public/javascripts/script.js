@@ -36,15 +36,15 @@ function displayPosts(array) {
 }
 
 fetch("http://localhost:3000/posts", { mode: "cors" })
-  .then(function (response) {
+  .then((response) => {
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }
     return response.json();
   })
-  .then(function (data) {
+  .then((data) => {
     displayPosts(data);
   })
-  .catch(function (error) {
+  .catch((error) => {
     console.error("Fetch error:", error);
   });
