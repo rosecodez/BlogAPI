@@ -43,8 +43,45 @@ fetch("http://localhost:3000/posts", { mode: "cors" })
     return response.json();
   })
   .then((data) => {
+    console.log(data);
     displayPosts(data);
   })
   .catch((error) => {
     console.error("Fetch error:", error);
+  });
+
+const jwtToken = localStorage.getItem("token");
+
+async function loginUser() {
+  try {
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+
+    const response = await fetch("/users/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, password }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message);
+    }
+
+    const data = await response.json();
+
+    localStorage.setItem("token", data.token);
+
+    window.location.href = "/users/user-details";
+  } catch (error) {
+    alert("Login failed: " + error.message);
+  }
+}
+
+// Form submission handler
+document
+  .getElementById("loginForm")
+  .addEventListener("submit", async function (e) {
+    e.preventDefault();
+    await loginUser();
   });

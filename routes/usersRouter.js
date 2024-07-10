@@ -7,14 +7,10 @@ const verifyToken = require("../middleware/verifyToken");
 router.get("/", userController.getAllUsers);
 
 // PUT update a user by id
-router.put("/:userId", verifyToken, (req, res) => {
-  res.json({ user: req.user });
-});
+router.put("/:userId", verifyToken, userController.updateUser);
 
 // DELETE a user by id
-router.delete("/:userId", verifyToken, (req, res) => {
-  res.json({ user: req.user });
-});
+router.delete("/:userId", verifyToken, userController.deleteUser);
 
 // signup
 router.get("/signup", userController.signupUser);
@@ -22,17 +18,12 @@ router.post("/signup", userController.signupUserPost);
 
 // login
 router.get("/login", userController.loginUser);
-router.post("/login", userController.loginUserPost),
-  (req, res) => {
-    console.log("LOGIN REQ BODY: " + req.body);
-  };
+router.post("/login", userController.loginUserPost);
 
 // logout
-router.get("/logout", verifyToken, (req, res) => {
-  res.json({ user: req.user });
-});
+router.get("/logout", verifyToken, userController.logoutUser);
+
 // display user details
-router.get("/user-details", verifyToken, (req, res) => {
-  res.json({ user: req.user });
-});
+router.get("/user-details", verifyToken, userController.userDetails);
+
 module.exports = router;

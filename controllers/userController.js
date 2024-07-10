@@ -3,15 +3,6 @@ const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const jwtSecret = process.env.JWT_SECRET;
-
-function generateToken(user) {
-  const payload = {
-    id: user.id,
-    username: user.username,
-  };
-  return jwt.sign(payload, jwtSecret, { expiresIn: "1h" });
-}
 
 exports.getAllUsers = asyncHandler(async (req, res, next) => {
   try {
@@ -108,25 +99,20 @@ exports.loginUserPost = async (req, res, next) => {
 
   try {
     const user = await User.findOne({ username });
-
+    console.log("current user" + user);
     if (!user) {
-      return res.status(401).json({ error: "Authentication failed" });
+      return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    const passwordMatch = await bcrypt.compare(password, user.password);
-
-    if (!passwordMatch) {
-      return res.status(401).json({ error: "Authentication failed" });
-    }
-
-    const token = jwt.sign({ userId: user._id }, jwtSecret, {
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
 
+    console.log("Token created at login user post: " + token);
     res.status(200).json({ token });
-  } catch (error) {
-    console.error("Error during login:", error);
-    res.status(500).json({ error: "Login failed" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
   }
 };
 
@@ -141,11 +127,5 @@ exports.logoutUser = asyncHandler(async (req, res, next) => {
 });
 
 exports.userDetails = (req, res) => {
-  if (req.isAuthenticated()) {
-    console.log(`User details accessed for user: ${req.user.username}`);
-    res.render("user-details", { user: req.user });
-  } else {
-    console.log("User not authenticated, redirecting to login");
-    res.redirect("/users/login");
-  }
+  res.render("user-details", { user: req.user });
 };

@@ -10,7 +10,7 @@ block content
     else
         h4 You are not logged in
         h4 Please log in
-        form(id="loginForm" method="POST", action="/users/login")
+        form(id="loginForm", method="POST", action="/users/login")
             div.form-group
                 label(for="username") Username
                 input.form-control(type='text', id='username', placeholder="Enter your username", name="username")
@@ -18,8 +18,6 @@ block content
                 label(for="password") Password
                 input.form-control(type='password', id='password', placeholder="Enter your password", name="password")
             button.btn.btn-primary(type="submit") Log in
-
-    script(src="/javascripts/login.js")
 
     if errors && errors.length > 0
         ul.text-danger
