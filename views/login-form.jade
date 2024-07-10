@@ -18,7 +18,9 @@ block content
                 label(for="password") Password
                 input.form-control(type='password', id='password', placeholder="Enter your password", name="password")
             button.btn.btn-primary(type="submit") Log in
-            
+
+    script(src="/javascripts/login.js")
+
     if errors && errors.length > 0
         ul.text-danger
             each error in errors

@@ -2,9 +2,16 @@ const User = require("../models/user");
 const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
-const session = require("express-session");
-const passport = require("passport");
-const LocalStrategy = require("passport-local").Strategy;
+const jwt = require("jsonwebtoken");
+const jwtSecret = process.env.JWT_SECRET;
+
+function generateToken(user) {
+  const payload = {
+    id: user.id,
+    username: user.username,
+  };
+  return jwt.sign(payload, jwtSecret, { expiresIn: "1h" });
+}
 
 exports.getAllUsers = asyncHandler(async (req, res, next) => {
   try {
@@ -92,67 +99,36 @@ exports.signupUserPost = [
   }),
 ];
 
-passport.use(
-  new LocalStrategy(async (username, password, done) => {
-    try {
-      const user = await User.findOne({ username });
-      if (!user) {
-        console.log("Login failed: incorrect username");
-        return done(null, false, {
-          message: "Incorrect username or password.",
-        });
-      }
-      const isMatch = await bcrypt.compare(password, user.password);
-      if (!isMatch) {
-        console.log("Login failed: incorrect password");
-        return done(null, false, {
-          message: "Incorrect username or password.",
-        });
-      }
-      console.log("Login successful");
-      return done(null, user);
-    } catch (err) {
-      return done(err);
-    }
-  })
-);
-
-passport.serializeUser((user, done) => {
-  done(null, user.id);
-});
-
-passport.deserializeUser(async (id, done) => {
-  try {
-    const user = await User.findById(id);
-    done(null, user);
-  } catch (err) {
-    done(err);
-  }
-});
-
 exports.loginUser = asyncHandler((req, res) => {
-  console.log("Rendering login form");
   res.render("login-form");
 });
 
-exports.loginUserPost = asyncHandler(async (req, res, next) => {
-  passport.authenticate("local", (err, user, info) => {
-    if (err) {
-      return next(err);
-    }
+exports.loginUserPost = async (req, res, next) => {
+  const { username, password } = req.body;
+
+  try {
+    const user = await User.findOne({ username });
+
     if (!user) {
-      console.log("Login failed:", info.message);
-      return res.redirect("/users/login");
+      return res.status(401).json({ error: "Authentication failed" });
     }
-    req.logIn(user, (err) => {
-      if (err) {
-        return next(err);
-      }
-      console.log("Login successful");
-      return res.redirect("/users/user-details");
+
+    const passwordMatch = await bcrypt.compare(password, user.password);
+
+    if (!passwordMatch) {
+      return res.status(401).json({ error: "Authentication failed" });
+    }
+
+    const token = jwt.sign({ userId: user._id }, jwtSecret, {
+      expiresIn: "1h",
     });
-  })(req, res, next);
-});
+
+    res.status(200).json({ token });
+  } catch (error) {
+    console.error("Error during login:", error);
+    res.status(500).json({ error: "Login failed" });
+  }
+};
 
 exports.logoutUser = asyncHandler(async (req, res, next) => {
   req.logout(function (err) {

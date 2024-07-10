@@ -16,7 +16,10 @@ html(lang='en')
         div.collapse.navbar-collapse(id="navbarNav")
           ul.navbar-nav
             li.nav-item
-              a.nav-link(href='/users/user-details') Profile
+              if user
+                a.nav-link(href='/users/user-details') Profile
+              else
+                a.nav-link(href='/users/login') Login
 
     block content
     block posts-container
