@@ -20,7 +20,7 @@ export default function BlogsSection() {
                 return response.json();
             })
             .then(data => {
-
+                console.log(data)
                 setPosts(data);
             })
             .catch(error => setError(error.message))
@@ -37,21 +37,22 @@ export default function BlogsSection() {
             <b><h3 className='pt-5'>Latest posts</h3></b>
             <div className="py-5"id="blogs">
                 {posts.map((post, index) => (
-                    <div className="post" key={index}>
-                        <p><b>{post.title}</b></p>
-                        <p className='post-text tracking-wide leading-loose'>{post.text}</p>
+                    <div id="post" key={index}>
+                        <p className='pb-2'><b>{post.title}</b></p>
+                        <p className='post-text tracking-wide leading-loose pb-2'>{post.text}</p>
                         <p>
+                            <i>
                             {DateTime.fromISO(post.timestamp).toLocaleString(DateTime.DATE_MED)}
+                            </i>
                         </p>
-                        <p>{post.published}</p>
-                        <div id="post-likes-comments" className='flex gap-3'>
-                            <div id="likes-container" className='flex gap-1 align-items: center'>
+                        <div id="post-likes-comments" className='flex gap-3 pt-2'>
+                            <div id="likes-container" className='flex gap-1 items-center'>
                                 <img className='post-images' src={like} alt="Like" />
                                 <div className="text">
                                     <p>{likesCount}</p>
                                 </div>
                             </div>
-                            <div id="comments-container" className='flex gap-1 align-items: center'>
+                            <div id="comments-container" className='flex gap-1 items-center'>
                                 <img className='post-images' src={comment} alt="Comment" />
                                 <div className="text">
                                     <p>{commentsCount}</p>
