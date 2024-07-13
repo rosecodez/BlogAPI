@@ -1,15 +1,21 @@
 import React from 'react';
+import { useState } from 'react';
+
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Navbar from '../components/navbar';
 import ErrorPage from './error-page.jsx';
 import BlogsPage from './blogs-page.jsx';
 import BlogDetailPage from './blog-detail-page.jsx';
+import SignupPage from './signup-page.jsx';
+import LoginPage from './login-page.jsx';
+import ProfilePage from './profile-page.jsx';
 
 const Router = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const router = createBrowserRouter([
     {
       path: '/',
-      element: <Navbar />,
+      element: <Navbar isAuthenticated={isAuthenticated} />,
       errorElement: <ErrorPage />,
 
       children: [
@@ -22,8 +28,12 @@ const Router = () => {
           element: <BlogDetailPage />,
         },
         {
-          path: '/user-details',
-          element: <BlogsPage />,
+          path: "/signup",
+          element: <SignupPage setToken={setIsAuthenticated} />,
+        },
+        {
+          path: "/login",
+          element: <LoginPage setToken={setIsAuthenticated} />,
         },
       ],
     },

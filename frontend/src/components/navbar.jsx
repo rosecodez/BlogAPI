@@ -11,7 +11,11 @@ export default function Navbar( { isAuthenticated }) {
             <Link to="/">
               <h2 id="blog">Home</h2>
             </Link>
-            {!isAuthenticated && (
+            {isAuthenticated ? (
+              <Link to="/profile">
+                <h2 id="profile">Profile</h2>
+              </Link>
+            ) : (
               <Link to="/signup">
                 <h2 id="signup">Sign Up</h2>
               </Link>

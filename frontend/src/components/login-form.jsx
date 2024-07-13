@@ -1,26 +1,40 @@
 import React from "react";
-import { useForm } from "react-hook-form";
+import { useState } from 'react';
 
-export default function LoginForm() {
+import PropTypes from 'prop-types';
+
+export default function LoginForm( { setToken } ) {
     const {register, handleSubmit, formState: { errors },} = useForm();
 
-    const onSubmit = (data) => {
-        const userData = JSON.parse(localStorage.getItem(data.username));
-        if (userData) {
-            if (userData.password === data.password) {
-                console.log(userData.name + " You Are Successfully Logged In");
+    const loginUser = async (credentials) => {
+        return fetch('http://localhost:8080/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(credentials)
+        }).then(response => response.json());
+    };
+
+    const onSubmit = async (data) => {
+        try {
+            const response = await loginUser(data);
+            if (response.token) {
+                setToken(response.token); 
+                console.log("Login successful!");
             } else {
-                console.log("username or Password is not matching with our record");
+                console.log("Invalid username or password")
             }
-        } else {
-            console.log("username or Password is not matching with our record");
+        } catch (error) {
+            console.error("Error logging in:", error);
         }
     };
+    
     return (
         <>
             <p className="title">Login Form</p>
 
-            <form className="App" onSubmit={handleSubmit(onSubmit)}>
+            <form id="login-form" onSubmit={handleSubmit(onSubmit)}>
                 <input type="username" {...register("username", { required: true })} />
                 {errors.username && <span style={{ color: "red" }}>
                     *username* is mandatory </span>}
@@ -29,4 +43,7 @@ export default function LoginForm() {
             </form>
         </>
     );
+}
+LoginForm.propTypes = {
+  setToken: PropTypes.func.isRequired
 }
