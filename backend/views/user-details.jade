@@ -1,9 +1,0 @@
-extends layout
-
-block content
-  h3 Your profile
-  p Welcome, #{user.username}!
-  a(href="/users/logout") Log out
-  if user.author
-    a.user-details-links(href='/users/new-post') New post
-    br

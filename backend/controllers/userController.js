@@ -43,10 +43,6 @@ exports.deleteUser = asyncHandler(async (req, res, next) => {
   }
 });
 
-exports.signupUser = asyncHandler((req, res, next) => {
-  res.render("signup-form");
-});
-
 exports.signupUserPost = [
   body("username", "Username must be specified and at least 6 characters long")
     .trim()
@@ -60,20 +56,10 @@ exports.signupUserPost = [
   asyncHandler(async (req, res, next) => {
     const errors = validationResult(req);
 
-    if (!errors.isEmpty()) {
-      return res.status(400).render("sign-up-form", {
-        errors: errors.array(),
-        user: req.body,
-      });
-    }
-
     try {
       const existingUser = await User.findOne({ username: req.body.username });
       if (existingUser) {
-        return res.status(400).render("sign-up-form", {
-          errors: [{ msg: "Username already taken" }],
-          user: req.body,
-        });
+        return res.status(400);
       }
 
       const hashedPassword = await bcrypt.hash(req.body.password, 10);
@@ -89,10 +75,6 @@ exports.signupUserPost = [
     }
   }),
 ];
-
-exports.loginUser = asyncHandler((req, res) => {
-  res.render("login-form");
-});
 
 exports.loginUserPost = async (req, res, next) => {
   const { username, password } = req.body;
@@ -125,7 +107,3 @@ exports.logoutUser = asyncHandler(async (req, res, next) => {
     res.redirect("/");
   });
 });
-
-exports.userDetails = (req, res) => {
-  res.render("user-details", { user: req.user });
-};

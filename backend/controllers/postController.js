@@ -26,11 +26,6 @@ const getPostById = async (req, res, next) => {
   }
 };
 
-// Create a new post
-const createPostGet = asyncHandler(async (req, res, next) => {
-  res.render("new-post");
-});
-
 const createPostPost = [
   body("title", "Title must be specified").trim().isLength({ min: 1 }).escape(),
   body("text", "Text must be specified").trim().isLength({ min: 1 }).escape(),
