@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Navbar from '../components/navbar';
 import ErrorPage from './error-page.jsx';
 import BlogsPage from './blogs-page.jsx';
+import BlogDetailPage from './blog-detail-page.jsx';
 
 const Router = () => {
   const router = createBrowserRouter([
@@ -15,6 +16,10 @@ const Router = () => {
         {
           path: '/',
           element: <BlogsPage />,
+        },
+        {
+          path: '/posts/:postId',
+          element: <BlogDetailPage />,
         },
         {
           path: '/user-details',

@@ -7,8 +7,8 @@ export default function Navbar() {
     <>
       <div className="rounded-lg pt-3 sticky top-0 bg-gradient-to-r from-green-400 to-blue-500">
         <section className="pb-3 font-bold" id="navbar">
-          <div className="text-2xl bold ml-10" id="blogs-container">
-            <Link to="/"> 
+          <div className="text-2xl bold ml-10 font-mono" id="blogs-container">
+            <Link to="/">
               <h2 id="blog">Home</h2>
             </Link>
             <Link to="/user-details">
