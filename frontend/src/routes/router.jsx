@@ -13,7 +13,7 @@ const Router = () => {
 
       children: [
         {
-          path: '/blogs',
+          path: '/',
           element: <BlogsPage />,
         },
         {

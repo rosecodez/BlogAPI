@@ -1,7 +1,9 @@
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
+
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
@@ -24,10 +26,16 @@ a:hover {
 
 body {
   margin: 0;
+  padding: 0;
   display: flex;
   place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  min-width: 330px;
+  min-height: 21vh;
+  flex-direction: column;
+  justify-content: center;
+  padding-bottom: 30px;
+  padding-left: 400px;
+  padding-right: 400px;
 }
 
 h1 {
@@ -65,4 +73,27 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+
+div#blogs-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 30px;
+}
+#blogs {
+  display: flex;
+  gap: 30px;
+  flex-direction: column;
+}
+.post-text {
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  max-height: 203px;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+.post-images {
+  height: 20px;
 }
