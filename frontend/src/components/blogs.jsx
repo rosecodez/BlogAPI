@@ -43,7 +43,20 @@ export default function BlogsSection() {
                             {DateTime.fromISO(post.timestamp).toLocaleString(DateTime.DATE_MED)}
                             </i>
                         </p>
- 
+                        <div id="post-likes-comments" className='flex gap-3 pt-2'>
+                            <div id="likes-container" className='flex gap-1 items-center'>
+                                <img className='post-images' src={like} alt="Like" />
+                                <div className="text">
+                                    <p>{likesCount}</p>
+                                </div>
+                            </div>
+                            <div id="comments-container" className='flex gap-1 items-center'>
+                                <img className='post-images' src={comment} alt="Comment" />
+                                <div className="text">
+                                    <p>{commentsCount}</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 ))}
             </div>

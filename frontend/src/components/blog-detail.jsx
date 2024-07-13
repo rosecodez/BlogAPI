@@ -10,7 +10,6 @@ export default function BlogDetail() {
     const[postText, setPostText] = useState('');
     const [likesCount, setLikesCount] = useState(0);
     const [commentsCount, setCommentsCount] = useState(0)
-
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
 
@@ -29,7 +28,7 @@ export default function BlogDetail() {
             .catch(error => setError(error.message))
             .finally(() => setLoading(false));
     }, [postId]);
-    
+
     const postTextWithBreaks = postText.replaceAll('.', '.\n');
 
     if (loading) return <p>Loading...</p>;
@@ -58,7 +57,7 @@ export default function BlogDetail() {
                         </div>
                     </div>
                     </div>
-                    <div id="comments" className='border-solid border-2 border-indigo-300'>
+                    <div id="comments" className='border-solid rounded-lg border-4 border-indigo-200 border-t-indigo-300 p-2'> Comments
 
                     </div>
                 </div>

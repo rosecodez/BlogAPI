@@ -15,7 +15,7 @@ const ErrorPage = () => {
 
   useEffect(() => {
     if (countdown === 0) {
-      navigate('/page/homepage');
+      navigate('/');
     }
   }, [countdown, navigate]);
 
