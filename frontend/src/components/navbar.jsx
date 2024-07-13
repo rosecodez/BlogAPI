@@ -5,7 +5,7 @@ import { Outlet } from "react-router-dom";
 export default function Navbar( { isAuthenticated }) {
   return (
     <>
-      <div className="rounded-lg pt-3 sticky top-0 bg-gradient-to-r from-green-400 to-blue-500">
+      <div className="rounded-lg pt-3 sticky top-0 bg-gradient-to-r from-green-400">
         <section className="pb-3 font-bold" id="navbar">
           <div className="text-2xl bold ml-10 font-mono" id="blogs-container">
             <Link to="/">

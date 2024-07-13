@@ -32,18 +32,24 @@ export default function SignupForm({ setToken }) {
     };
 
     return (
-        <>
-            <p className="title">Signup Form</p>
+        <div className='w-full max-w-xs'>
+            <b><h3 className="title pb-2 font-mono pt-5">Signup Form</h3></b>
 
-            <form id="signup-form" onSubmit={handleSubmit(onSubmit)}>
-                <input type="text" {...register("name")} placeholder="Name" />
-                <input type="text" {...register("username", { required: true })} placeholder="Username" />
+            <form id="signup-form" className='font-mono flex flex-col bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4' onSubmit={handleSubmit(onSubmit)}>
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
+                    Username
+                </label>
+                <input className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' type="text" {...register("username", { required: true })} placeholder="Username" />
                 {errors.username && <span style={{ color: "red" }}>Username is mandatory</span>}
-                <input type="password" {...register("password", { required: true })} placeholder="Password" />
+                
+                <label className="pt-4 block text-gray-700 text-sm font-bold mb-2" for="password">
+                    Password
+                </label>
+                <input className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' type="password" {...register("password", { required: true })} placeholder="Password" />
                 {errors.password && <span style={{ color: "red" }}>Password is mandatory</span>}
-                <input type="submit" style={{ backgroundColor: "#a1eafb" }} value="Sign Up" />
+                <button className='mt-8 bg-blue-500 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline' type="button" value="Sign Up">Submit</button>
             </form>
-        </>
+        </div>
     );
 }
 

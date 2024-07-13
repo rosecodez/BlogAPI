@@ -4,7 +4,7 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 
 export default function LoginForm( { setToken } ) {
-    const {register, handleSubmit, formState: { errors },} = useForm();
+    const {login, handleSubmit, formState: { errors },} = useForm();
 
     const loginUser = async (credentials) => {
         return fetch('http://localhost:8080/login', {
@@ -34,11 +34,11 @@ export default function LoginForm( { setToken } ) {
         <>
             <p className="title">Login Form</p>
 
-            <form id="login-form" onSubmit={handleSubmit(onSubmit)}>
-                <input type="username" {...register("username", { required: true })} />
+            <form id="login-form" className="flex flex-col bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit(onSubmit)}>
+                <input type="username" {...login("username", { required: true })} />
                 {errors.username && <span style={{ color: "red" }}>
                     *username* is mandatory </span>}
-                <input type="password" {...register("password")} />
+                <input type="password" {...login("password")} />
                 <input type={"submit"} style={{ backgroundColor: "#a1eafb" }} />
             </form>
         </>
