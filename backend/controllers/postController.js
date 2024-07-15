@@ -26,46 +26,28 @@ const getPostById = async (req, res, next) => {
   }
 };
 
-const createPostPost = [
-  body("title", "Title must be specified").trim().isLength({ min: 1 }).escape(),
-  body("text", "Text must be specified").trim().isLength({ min: 1 }).escape(),
-
-  asyncHandler(async (req, res, next) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+const createPost = async (req, res, next) => {
+  try {
+    const { title, content, userId } = req.body;
+    const userExists = await User.exists({ _id: userId });
+    if (!userExists) {
+      return res.status(404).json({ message: "User not found" });
     }
 
-    try {
-      const { title, text } = req.body;
-      const existingPost = await Post.findOne({ text });
+    // Create new post
+    const newPost = new Post({
+      title,
+      content,
+      user: userId,
+    });
 
-      if (existingPost) {
-        return res.status(400).json({ message: "Post already exists" });
-      }
+    await newPost.save();
 
-      const user = await User.findById(req.user.id);
-
-      if (!user) {
-        return res.status(404).json({ message: "User not found" });
-      }
-
-      const newPost = new Post({
-        title,
-        text,
-        timestamp: new Date(),
-        published: true,
-        user: user._id,
-      });
-
-      await newPost.save();
-      res.status(201).json(newPost);
-    } catch (err) {
-      console.error("Error creating post:", err);
-      next(err);
-    }
-  }),
-];
+    res.status(201).json(newPost);
+  } catch (err) {
+    next(err);
+  }
+};
 
 // Update a post by id
 const updatePost = async (req, res, next) => {
@@ -109,8 +91,6 @@ const deletePost = async (req, res, next) => {
 module.exports = {
   getAllPosts,
   getPostById,
-  createPostGet,
-  createPostPost,
   updatePost,
   deletePost,
 };

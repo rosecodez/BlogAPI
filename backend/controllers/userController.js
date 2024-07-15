@@ -56,10 +56,14 @@ exports.signupUserPost = [
   asyncHandler(async (req, res, next) => {
     const errors = validationResult(req);
 
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
     try {
       const existingUser = await User.findOne({ username: req.body.username });
       if (existingUser) {
-        return res.status(400);
+        return res.status(400).json({ message: "Username already taken" });
       }
 
       const hashedPassword = await bcrypt.hash(req.body.password, 10);
@@ -69,7 +73,7 @@ exports.signupUserPost = [
       });
 
       await user.save();
-      res.redirect("/");
+      res.status(201).json({ message: "Signup successful!" });
     } catch (err) {
       next(err);
     }

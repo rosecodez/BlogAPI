@@ -13,17 +13,17 @@ router.put("/:userId", verifyToken, userController.updateUser);
 router.delete("/:userId", verifyToken, userController.deleteUser);
 
 // signup
-router.get("/signup", userController.signupUser);
+//router.get("/signup", userController.signupUser);
 router.post("/signup", userController.signupUserPost);
 
 // login
-router.get("/login", userController.loginUser);
+//router.get("/login", userController.loginUser);
 router.post("/login", userController.loginUserPost);
 
 // logout
 router.get("/logout", verifyToken, userController.logoutUser);
 
 // display user details
-router.get("/user-details", verifyToken, userController.userDetails);
+//router.get("/user-details", verifyToken, userController.userDetails);
 
 module.exports = router;

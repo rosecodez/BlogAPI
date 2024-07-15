@@ -1,10 +1,9 @@
 import React from "react";
-import { useState } from 'react';
-
+import { useForm } from 'react-hook-form';
 import PropTypes from 'prop-types';
 
 export default function LoginForm( { setToken } ) {
-    const {login, handleSubmit, formState: { errors },} = useForm();
+    const { register, handleSubmit, formState: { errors } } = useForm();
 
     const loginUser = async (credentials) => {
         return fetch('http://localhost:8080/login', {
@@ -23,7 +22,7 @@ export default function LoginForm( { setToken } ) {
                 setToken(response.token); 
                 console.log("Login successful!");
             } else {
-                console.log("Invalid username or password")
+                console.log("Invalid username or password");
             }
         } catch (error) {
             console.error("Error logging in:", error);
@@ -31,19 +30,31 @@ export default function LoginForm( { setToken } ) {
     };
     
     return (
-        <>
-            <p className="title">Login Form</p>
+        <div className="font-mono w-full max-w-xs">
 
-            <form id="login-form" className="flex flex-col bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit(onSubmit)}>
-                <input type="username" {...login("username", { required: true })} />
-                {errors.username && <span style={{ color: "red" }}>
-                    *username* is mandatory </span>}
-                <input type="password" {...login("password")} />
-                <input type={"submit"} style={{ backgroundColor: "#a1eafb" }} />
+            <div id="signup-container" className='pt-5'>
+                <h6 className='pb-3'>Don't have an account?</h6>
+                <a href='signup'>Log in</a>
+            </div>
+
+            <b><p className="title pb-2 pt-5">Login Form</p></b>
+
+            <form id="login-form" className='flex flex-col bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4' onSubmit={handleSubmit(onSubmit)}>
+
+                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username" placeholder="Username">Username</label>
+                <input className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' type="username" {...register("username", { required: true })} />
+                {errors.username && <span style = { { color: "red" } }>Username is mandatory</span>}
+
+                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password" placeholder="password">Password</label>
+                <input className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' type="password" {...register("password", { required: true })} />
+                {errors.password && <span style={{ color: "red" }}>Password is mandatory</span>}
+
+                <button className='mt-8 bg-blue-500 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline' type="submit">Log in</button>            
             </form>
-        </>
+        </div>
     );
 }
+
 LoginForm.propTypes = {
-  setToken: PropTypes.func.isRequired
-}
+    setToken: PropTypes.func.isRequired
+};

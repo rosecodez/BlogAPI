@@ -1,9 +1,10 @@
+import React from 'react';
 import SignupForm from "../components/signup-form";
 
-export default function SignupPage({ setToken }) {
+export default function SignupPage() {
     return (
         <div>
-            <SignupForm setToken={setToken} />
+            <SignupForm/>
         </div>
     );
 }

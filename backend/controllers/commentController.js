@@ -6,7 +6,8 @@ const { body, validationResult } = require("express-validator");
 // Get all comments for a specific post
 const getAllComments = async (req, res, next) => {
   try {
-    const comments = await Comment.find();
+    const postId = req.params.postId;
+    const comments = await Comment.find({ postId });
     res.json(comments);
   } catch (err) {
     next(err);
@@ -22,31 +23,31 @@ const getCommentById = async (req, res, next) => {
     }
     res.json(comment);
   } catch (err) {
+    console.error("Error in getCommentById:", err);
     next(err);
   }
 };
 
 // Create a new comment for a post
 const createComment = async (req, res, next) => {
-  const { text } = req.body;
   try {
-    const existingComment = await Comment.findOne({ text });
-    if (existingComment) {
-      return res.status(400).json({ message: "Comment already exists" });
+    const { postId, text, userId } = req.body;
+
+    const postExists = await Post.exists({ _id: postId });
+    if (!postExists) {
+      return res.status(404).json({ message: "Post not found" });
     }
 
-    const user = await User.findById("6679b6dd5b9e70e350d8a210");
-    if (!user) {
+    const userExists = await User.exists({ _id: userId });
+    if (!userExists) {
       return res.status(404).json({ message: "User not found" });
     }
 
     const newComment = new Comment({
-      text: "That's really interesting. nice job",
-      timestamp: new Date(),
-      user: user._id,
-      postId: req.params.postId,
+      postId,
+      text,
+      user: userId,
     });
-
     await newComment.save();
     res.status(201).json(newComment);
   } catch (err) {

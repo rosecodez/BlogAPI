@@ -9,8 +9,8 @@ router.get("/", postController.getAllPosts);
 router.get("/:postId", postController.getPostById);
 
 // POST create a new post
-router.get("/createPost", postController.createPostGet);
-router.post("/createPost", postController.createPostPost);
+//router.get("/createPost", postController.createPostGet);
+//router.post("/createPost", postController.createPostPost);
 
 // PUT update a post by id
 router.put("/:postId", postController.updatePost);

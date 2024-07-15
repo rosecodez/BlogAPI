@@ -3,7 +3,7 @@ const express = require("express");
 const path = require("path");
 const mongoose = require("mongoose");
 const cors = require("cors");
-
+const bodyParser = require("body-parser");
 require("dotenv").config({ path: path.join(__dirname, ".env") });
 
 const indexRouter = require("./routes/indexRouter");
@@ -19,11 +19,16 @@ app.use((req, res, next) => {
 
 app.use(cors());
 
-const mongoDB = process.env.MONGODB_URI;
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 
-if (!mongoDB) {
-  throw new Error("MONGODB_URI environment variable not set.");
-}
+app.use(bodyParser.json());
+const mongoDB = process.env.MONGODB_URI;
 
 mongoose
   .connect(mongoDB)
