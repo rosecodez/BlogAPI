@@ -15,8 +15,9 @@ export default function LoginForm() {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify(credentials),
+                credentials: 'include',
             });
-
+    
             if (!response.ok) {
                 const errorData = await response.json();
                 setLoginError(`Login failed: ${errorData.message}`);
@@ -27,7 +28,7 @@ export default function LoginForm() {
             localStorage.setItem('token', data.token);
             navigate("/");
         } catch (error) {
-            console.error("Error loggin up:", error.message);
+            console.error("Error logging in:", error.message);
         }
     };
 

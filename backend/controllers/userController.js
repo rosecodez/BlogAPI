@@ -89,18 +89,17 @@ exports.loginUserPost = async (req, res, next) => {
 
   try {
     const user = await User.findOne({ username });
-    console.log("current user" + user);
+
     if (!user) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
-    if (password !== user.password) {
+    const passwordMatch = await bcrypt.compare(password, user.password);
+    if (!passwordMatch) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
-
-    console.log("Token created at login user post: " + token);
     res.status(200).json({ token });
   } catch (err) {
     console.error(err);
