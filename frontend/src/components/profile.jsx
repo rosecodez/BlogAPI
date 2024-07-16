@@ -21,7 +21,7 @@ export default function Profile() {
       return response.json();
     })
     .then(data => {
-      console.log(data.user)
+      console.log(data)
       setUsername(data.user.username);
       setLoading(false);
     })
@@ -36,7 +36,8 @@ export default function Profile() {
 
   return (
     <div>
-      <h2>Welcome, {username}!</h2>
+      <h2 className="pt-5 text-2xl bold font-mono">Welcome, {username}!</h2>
+      <a href="logout">Log out</a>
     </div>
   );
 }

@@ -9,6 +9,7 @@ import BlogDetailPage from './blog-detail-page.jsx';
 import SignupPage from './signup-page.jsx';
 import LoginPage from './login-page.jsx';
 import ProfilePage from './profile-page.jsx';
+import LogoutPage from './logout-page.jsx';
 
 const Router = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -36,8 +37,12 @@ const Router = () => {
           element: <LoginPage/>,
         },
         {
-          path:"/profile",
+          path: "/profile",
           element: <ProfilePage/>,
+        },
+        {
+          path: "/logout",
+          element: <LogoutPage/>,
         }
       ],
     },

@@ -1,0 +1,35 @@
+import { useNavigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
+
+export default function LogoutPage() {
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const logoutUser = async () => {
+            try {
+                const response = await fetch("http://localhost:3000/users/logout", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    credentials: 'include',
+                });
+                if (!response.ok) {
+                    throw new Error("Logout request failed");
+                }
+                localStorage.removeItem('token');
+                navigate("/");
+            } catch (error) {
+                console.error("Error logging out:", error.message);
+            }
+        };
+
+        logoutUser();
+    }, [navigate]);
+
+    return (
+        <div>
+            <p>Logging out...</p>
+        </div>
+    );
+}
