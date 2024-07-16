@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
-export default function LoginForm() {
+export default function LoginForm({ login }) {
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [loginError, setLoginError] = useState('');
@@ -26,6 +26,7 @@ export default function LoginForm() {
             const data = await response.json();
             console.log("Login successful:", data);
             localStorage.setItem('token', data.token);
+            login();
             navigate("/profile");
         } catch (error) {
             console.error("Error logging in:", error.message);

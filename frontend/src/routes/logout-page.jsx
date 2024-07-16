@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import React, { useEffect } from 'react';
 
-export default function LogoutPage() {
+export default function LogoutPage({logout}) {
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -18,6 +18,7 @@ export default function LogoutPage() {
                     throw new Error("Logout request failed");
                 }
                 localStorage.removeItem('token');
+                logout();
                 navigate("/");
             } catch (error) {
                 console.error("Error logging out:", error.message);

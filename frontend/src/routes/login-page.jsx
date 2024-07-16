@@ -1,9 +1,10 @@
-import LoginForm from "../components/login-form";
+import React from 'react';
+import LoginForm from '../components/login-form';
 
-export default function LoginPage() {
-    return (
-        <div>
-            <LoginForm/>
-        </div>
-    );
+export default function LoginPage({ login }) {
+  return (
+    <div>
+      <LoginForm login={login} />
+    </div>
+  );
 }

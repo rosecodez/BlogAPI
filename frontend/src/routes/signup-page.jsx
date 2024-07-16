@@ -1,10 +1,10 @@
 import React from 'react';
 import SignupForm from "../components/signup-form";
 
-export default function SignupPage() {
+export default function SignupPage( isAuthenticated={isAuthenticated}) {
     return (
         <div>
-            <SignupForm/>
+            <SignupForm isAuthenticated={isAuthenticated}/>
         </div>
     );
 }

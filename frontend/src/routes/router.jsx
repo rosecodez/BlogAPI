@@ -13,6 +13,18 @@ import LogoutPage from './logout-page.jsx';
 
 const Router = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  const login = () => {
+    setIsAuthenticated(true);
+  };
+  
+  const signup = () => {
+    setIsAuthenticated(true);
+  }
+  const logout = () => {
+    setIsAuthenticated(false);
+  };
+
   const router = createBrowserRouter([
     {
       path: '/',
@@ -30,19 +42,19 @@ const Router = () => {
         },
         {
           path: "/signup",
-          element: <SignupPage/>,
+          element: <SignupPage signup={signup} />,
         },
         {
           path: "/login",
-          element: <LoginPage/>,
+          element: <LoginPage login={login} />,
         },
         {
           path: "/profile",
-          element: <ProfilePage/>,
+          element: isAuthenticated ? <ProfilePage /> : <LoginPage login={login} />,
         },
         {
           path: "/logout",
-          element: <LogoutPage/>,
+          element: <LogoutPage logout={logout}/>,
         }
       ],
     },

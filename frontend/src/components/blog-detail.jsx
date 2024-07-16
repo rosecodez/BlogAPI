@@ -37,7 +37,6 @@ export default function BlogDetail() {
 
     return (
         <section id="blog-posts-section">
-            <h3 className='pt-5'><b>Post Details</b></h3>
             <div className="py-5" id="blogs">
                 <div id="post">
                     <p className='pb-2 font-mono'><b>{post.title}</b></p>
