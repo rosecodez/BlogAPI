@@ -8,6 +8,7 @@ import BlogsPage from './blogs-page.jsx';
 import BlogDetailPage from './blog-detail-page.jsx';
 import SignupPage from './signup-page.jsx';
 import LoginPage from './login-page.jsx';
+import ProfilePage from './profile-page.jsx';
 
 const Router = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -34,6 +35,10 @@ const Router = () => {
           path: "/login",
           element: <LoginPage/>,
         },
+        {
+          path:"/profile",
+          element: <ProfilePage/>,
+        }
       ],
     },
   ]);

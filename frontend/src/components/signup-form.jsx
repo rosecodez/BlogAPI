@@ -25,7 +25,7 @@ export default function SignupForm() {
             const data = await response.json();
             console.log("Signup successful:", data);
             localStorage.setItem('token', data.token);
-            navigate("/login");
+            navigate("/profile");
         } catch (error) {
             console.error("Error signing up:", error.message);
         }

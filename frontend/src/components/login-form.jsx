@@ -26,7 +26,7 @@ export default function LoginForm() {
             const data = await response.json();
             console.log("Login successful:", data);
             localStorage.setItem('token', data.token);
-            navigate("/");
+            navigate("/profile");
         } catch (error) {
             console.error("Error logging in:", error.message);
         }

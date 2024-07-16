@@ -25,6 +25,9 @@ With this project I have practiced and applied:
   ![alt text](image-1.png)
 
 - Route protection with <b>JWT</b>
+
   - use of <b>Passport's JWT strategy</b> to verify JWTs
   - deny or allow access to the rest of the protected route
   - when user logs out, the client will remove the JWT from storage
+
+  ![alt text](image-4.png)

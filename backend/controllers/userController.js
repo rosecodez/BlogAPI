@@ -108,11 +108,26 @@ exports.loginUserPost = async (req, res, next) => {
 };
 
 exports.logoutUser = asyncHandler(async (req, res, next) => {
-  req.logout(function (err) {
-    if (err) {
-      return next(err);
+  req.logout(function (err) {});
+});
+
+exports.getProfile = asyncHandler(async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user.id);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
     }
-    console.log("User logged out, redirecting to home");
-    res.redirect("/");
-  });
+
+    res.json({
+      message: "Profile data fetched successfully",
+      user: {
+        id: user._id,
+        username: user.username,
+      },
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server Error" });
+  }
 });
