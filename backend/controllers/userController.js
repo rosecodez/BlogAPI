@@ -73,9 +73,13 @@ exports.signupUserPost = [
       });
 
       await user.save();
-      res.status(201).json({ message: "Signup successful!" });
+      const token = jwt.sign({ id: newUser._id }, JWT_SECRET, {
+        expiresIn: "1h",
+      });
+      res.status(200).json({ token });
     } catch (err) {
-      next(err);
+      console.error("Error signing up:", error);
+      res.status(500).json({ message: "Server error" });
     }
   }),
 ];
@@ -89,7 +93,9 @@ exports.loginUserPost = async (req, res, next) => {
     if (!user) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
-
+    if (password !== user.password) {
+      return res.status(401).json({ message: "Invalid credentials" });
+    }
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });

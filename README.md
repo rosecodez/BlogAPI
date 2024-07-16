@@ -19,6 +19,11 @@ With this project I have practiced and applied:
 
     ![alt text](image-2.png)
 
+- understand reading the <b>Network</b> tab in Dev Tools
+- understand the <b>CORS</b> mechanism from host and client
+
+  ![alt text](image-1.png)
+
 - Route protection with <b>JWT</b>
   - use of <b>Passport's JWT strategy</b> to verify JWTs
   - deny or allow access to the rest of the protected route

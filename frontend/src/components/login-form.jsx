@@ -24,6 +24,7 @@ export default function LoginForm() {
             }
             const data = await response.json();
             console.log("Login successful:", data);
+            localStorage.setItem('token', data.token);
             navigate("/");
         } catch (error) {
             console.error("Error loggin up:", error.message);
@@ -49,11 +50,11 @@ export default function LoginForm() {
 
                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">Username</label>
                 <input className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' type="text" {...register("username", { required: true })} placeholder="Enter your username" />
-                {errors.username && <span style={{ color: "red" }}>Username is mandatory</span>}
+                {errors.username && <span style={{ color: "red" }}>Username is required</span>}
 
                 <label className="pt-4 block text-gray-700 text-sm font-bold mb-2" htmlFor="password">Password</label>
                 <input className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' type="password" {...register("password", { required: true })} placeholder="Enter your password" />
-                {errors.password && <span style={{ color: "red" }}>Password is mandatory</span>}
+                {errors.password && <span style={{ color: "red" }}>Password is required</span>}
 
                 {loginError && <span className='pt-4' style={{ color: "red"}}>{loginError}</span>}
 

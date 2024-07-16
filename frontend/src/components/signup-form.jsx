@@ -24,6 +24,7 @@ export default function SignupForm() {
             }
             const data = await response.json();
             console.log("Signup successful:", data);
+            localStorage.setItem('token', data.token);
             navigate("/login");
         } catch (error) {
             console.error("Error signing up:", error.message);
@@ -47,11 +48,11 @@ export default function SignupForm() {
             <form id="signup-form" className='flex flex-col bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4' onSubmit={handleSubmit(onSubmit)}>
                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">Username</label>
                 <input className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' type="text" name="username" {...register("username", { required: true })} placeholder="Username" />
-                {errors.username && <span className='pt-2' style={{ color: "red" }}>Username is mandatory. Minimum 6 letters</span>}
+                {errors.username && <span className='pt-2' style={{ color: "red" }}>Username is required. Minimum 6 letters</span>}
                 
                 <label className="pt-4 block text-gray-700 text-sm font-bold mb-2" htmlFor="password">Password</label>
                 <input className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' type="password" name="password" {...register("password", { required: true })} placeholder="Password" />
-                {errors.password && <span className='pt-2' style={{ color: "red" }}>Password is mandatory. Minimum 10 letters</span>}
+                {errors.password && <span className='pt-2' style={{ color: "red" }}>Password is required. Minimum 10 letters</span>}
 
                 {signupError && <span className='pt-4' style={{ color: "red" }}>{signupError}</span>}
                 
