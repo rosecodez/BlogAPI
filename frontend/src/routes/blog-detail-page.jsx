@@ -1,9 +1,9 @@
 import BlogDetail from "../components/blog-detail";
 
-export default function BlogDetailPage() {
+export default function BlogDetailPage({ isAuthenticated }) {
     return (
         <div>
-            <BlogDetail/>
+            <BlogDetail isAuthenticated= { isAuthenticated }/>
         </div>
     );
 }

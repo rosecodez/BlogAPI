@@ -1,6 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
-
+import { useState, useEffect } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Navbar from '../components/navbar';
 import ErrorPage from './error-page.jsx';
@@ -14,6 +13,13 @@ import LogoutPage from './logout-page.jsx';
 const Router = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      setIsAuthenticated(true);
+    }
+  }, []);
+
   const login = () => {
     setIsAuthenticated(true);
   };
@@ -21,8 +27,10 @@ const Router = () => {
   const signup = () => {
     setIsAuthenticated(true);
   }
+
   const logout = () => {
     setIsAuthenticated(false);
+    localStorage.removeItem('token');
   };
 
   const router = createBrowserRouter([
@@ -38,7 +46,7 @@ const Router = () => {
         },
         {
           path: '/posts/:postId',
-          element: <BlogDetailPage />,
+          element: <BlogDetailPage isAuthenticated={isAuthenticated} />,
         },
         {
           path: "/signup",
@@ -59,7 +67,7 @@ const Router = () => {
       ],
     },
   ]);
-
+  console.log("isAuthenticated:", isAuthenticated);
   return <RouterProvider router={router} />;
 };
 

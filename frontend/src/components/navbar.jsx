@@ -18,8 +18,8 @@ export default function Navbar({ isAuthenticated }) {
               </>
             ) : (
               <>
-                <Link to="/signup">
-                  <h2 id="signup">Sign Up</h2>
+                <Link to="/login">
+                  <h2 id="login">Log in</h2>
                 </Link>
               </>
             )}
