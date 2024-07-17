@@ -18,6 +18,7 @@ export default function LogoutPage({logout}) {
                     throw new Error("Logout request failed");
                 }
                 localStorage.removeItem('token');
+                localStorage.removeItem("userId")
                 logout();
                 navigate("/");
             } catch (error) {
