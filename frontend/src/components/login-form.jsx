@@ -24,8 +24,9 @@ export default function LoginForm({ login }) {
                 return;
             }
             const data = await response.json();
-            console.log("Login successful:", data);
-            localStorage.setItem('token', data.token);
+            console.log("Login response data:", data);
+            localStorage.setItem("token", data.token);
+            localStorage.setItem("userId", data.user.id);
             login();
             navigate("/profile");
         } catch (error) {
@@ -35,6 +36,7 @@ export default function LoginForm({ login }) {
 
     const onSubmit = (data) => {
         setLoginError('');
+        console.log("Form data submitted:", data);
         loginUser(data);
     };
     

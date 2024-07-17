@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 export default function Profile() {
   const [username, setUsername] = useState('');
@@ -21,7 +22,6 @@ export default function Profile() {
       return response.json();
     })
     .then(data => {
-      console.log(data)
       setUsername(data.user.username);
       setLoading(false);
     })
@@ -37,7 +37,11 @@ export default function Profile() {
   return (
     <div>
       <h2 className="pt-5 text-2xl bold font-mono">Welcome, {username}!</h2>
-      <a href="logout">Log out</a>
+      <div id="profile-links" className="flex flex-row gap-2">
+        <Link to="/profile/new-blog">Create new post</Link>
+        <Link to="/profile/logout">Log out</Link>
+      </div>
+      
     </div>
   );
 }

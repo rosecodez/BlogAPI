@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const postController = require("../controllers/postController");
+const verifyToken = require("../middleware/verifyToken");
 
 // GET all posts
 router.get("/", postController.getAllPosts);
@@ -10,12 +11,12 @@ router.get("/:postId", postController.getPostById);
 
 // POST create a new post
 //router.get("/createPost", postController.createPostGet);
-//router.post("/createPost", postController.createPostPost);
+router.post("/createPost", verifyToken, postController.createPostPost);
 
 // PUT update a post by id
 router.put("/:postId", postController.updatePost);
 
 // DELETE a post by id
-router.delete("/delete/:postId", postController.deletePost);
+router.delete("/delete/:postId", verifyToken, postController.deletePost);
 
 module.exports = router;

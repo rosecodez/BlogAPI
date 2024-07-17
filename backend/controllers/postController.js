@@ -26,25 +26,28 @@ const getPostById = async (req, res, next) => {
   }
 };
 
-const createPost = async (req, res, next) => {
+const createPostPost = async (req, res, next) => {
   try {
-    const { title, content, userId } = req.body;
-    const userExists = await User.exists({ _id: userId });
-    if (!userExists) {
+    console.log("Request body:", req.body);
+    const user = await User.findById(req.body.userId);
+    if (!user) {
+      console.error("User not found");
       return res.status(404).json({ message: "User not found" });
     }
 
-    // Create new post
     const newPost = new Post({
-      title,
-      content,
-      user: userId,
+      title: req.body.title,
+      text: req.body.text,
+      timestamp: new Date(),
+      published: true,
+      user: req.body.userId,
     });
 
     await newPost.save();
 
     res.status(201).json(newPost);
   } catch (err) {
+    console.error("Error creating new post:", err);
     next(err);
   }
 };
@@ -93,4 +96,5 @@ module.exports = {
   getPostById,
   updatePost,
   deletePost,
+  createPostPost,
 };
