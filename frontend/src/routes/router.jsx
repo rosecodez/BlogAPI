@@ -1,7 +1,9 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+
 import Navbar from '../components/navbar';
+
 import ErrorPage from './error-page.jsx';
 import BlogsPage from './blogs-page.jsx';
 import BlogDetailPage from './blog-detail-page.jsx';
@@ -10,6 +12,7 @@ import LoginPage from './login-page.jsx';
 import ProfilePage from './profile-page.jsx';
 import LogoutPage from './logout-page.jsx';
 import NewBlogPage from './new-blog-page.jsx';
+import BlogCommentsPage from './post-comments-page.jsx';
 
 const Router = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -48,6 +51,10 @@ const Router = () => {
         {
           path: '/posts/:postId',
           element: <BlogDetailPage isAuthenticated={isAuthenticated} />,
+        },
+        {
+          path: '/posts/:postId/comments',
+          element: <BlogCommentsPage isAuthenticated={isAuthenticated} />,
         },
         {
           path: "/signup",
