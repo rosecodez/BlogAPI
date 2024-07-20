@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { DateTime } from 'luxon'; 
+import { DateTime } from 'luxon';
+import { useParams } from 'react-router-dom';
 
 export default function BlogComments() {
     const { postId } = useParams();
-    const [comments, setComments] = useState(null);
+    const [comments, setComments] = useState([]);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
 
@@ -16,7 +17,11 @@ export default function BlogComments() {
                 return response.json();
             })
             .then(data => {
-                setComments(data);
+                if (Array.isArray(data)) {
+                    setComments(data);
+                } else {
+                    throw new Error('Invalid data format');
+                }
             })
             .catch(error => setError(error.message))
             .finally(() => setLoading(false));
@@ -24,9 +29,9 @@ export default function BlogComments() {
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
-    if (!post) return <p>No comment found</p>;
+    if (!comments.length) return <p>No comments found</p>;
 
-    rreturn (
+    return (
         <section id="blog-comments-section">
             <div className="py-5" id="blogs">
                 {comments.map(comment => (

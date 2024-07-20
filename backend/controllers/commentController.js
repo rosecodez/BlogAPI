@@ -51,7 +51,12 @@ const createComment = async (req, res, next) => {
     await newComment.save();
     res.status(201).json(newComment);
   } catch (err) {
-    next(err);
+    console.error("Error creating comment:", err);
+    if (err.name === "ValidationError") {
+      res.status(400).json({ message: err.message });
+    } else {
+      next(err);
+    }
   }
 };
 
