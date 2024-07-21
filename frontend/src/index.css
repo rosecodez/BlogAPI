@@ -84,11 +84,6 @@ div#blogs-container {
   gap: 30px;
   flex-wrap: wrap;
 }
-#blogs {
-  display: flex;
-  gap: 30px;
-  flex-direction: column;
-}
 .post-text {
   -webkit-box-orient: vertical;
   display: -webkit-box;

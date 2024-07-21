@@ -47,30 +47,32 @@ export default function BlogDetail() {
                     <p className="pb-2 font-mono"><b>{post.title}</b></p>
                     <p className="tracking-wide leading-loose pb-2 indent-8 font-serif">{postTextWithBreaks}</p>
                     <p><i>{DateTime.fromISO(post.timestamp).toLocaleString(DateTime.DATE_MED)}</i></p>
-                    <div id="post-likes-comments" className="flex gap-3 pt-2">
-                        <div id="likes-container" className="flex gap-1 items-center">
-                            <img className="post-images" src={like} alt="Like" />
-                            <div className="text">
-                                <p>{likesCount}</p>
-                            </div>
-                        </div>
-                        <div id="comments-container" className="flex gap-1 items-center">
-                            <img className="post-images" src={comment} alt="Comment" />
-                            <div className="text">
-                                <p>{commentsCount}</p>
-                            </div>
+                </div>
+
+                <div id="post-likes-comments" className="flex gap-3 pt-2">
+                    <div id="likes-container" className="flex gap-1 items-center">
+                        <img className="post-images" src={like} alt="Like" />
+                        <div className="text">
+                            <p>{likesCount}</p>
                         </div>
                     </div>
-                    <button 
-                        id="leave-a-comment" 
+                    <div id="comments-container" className="flex gap-1 items-center">
+                        <img className="post-images" src={comment} alt="Comment" />
+                        <div className="text">
+                            <p>{commentsCount}</p>
+                        </div>
+                    </div>
+                </div>
+                <div id="leave-a-comment">
+                    <button        
                         className="mt-6 bg-blue-500 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                         onClick={() => setShowNewCommentForm(!showNewCommentForm)}>{showNewCommentForm ? "Cancel" : "Leave a comment"}
                     </button>
-                    {showNewCommentForm && <NewComment />}
-                    <div id="comments" className="border-solid rounded-lg border-4 border-indigo-200 border-t-indigo-300 p-2 mt-3">
-                        Comments
-                        <BlogComments comments={comments} />
-                    </div>
+                </div>
+                {showNewCommentForm && <NewComment />}
+                <div id="comments" className="border-solid rounded-lg border-4 border-indigo-200 border-t-indigo-300 p-2 mt-3">
+                    <p className="text-lg">Comments</p>
+                    <BlogComments comments={comments} />
                 </div>
             </div>
         </section>

@@ -17,11 +17,8 @@ export default function BlogComments() {
                 return response.json();
             })
             .then(data => {
-                if (Array.isArray(data)) {
-                    setComments(data);
-                } else {
-                    throw new Error('Invalid data format');
-                }
+                console.log(data)
+                setComments(data);
             })
             .catch(error => setError(error.message))
             .finally(() => setLoading(false));
@@ -32,16 +29,13 @@ export default function BlogComments() {
     if (!comments.length) return <p>No comments found</p>;
 
     return (
-        <section id="blog-comments-section">
-            <div className="py-5" id="blogs">
-                {comments.map(comment => (
-                    <div key={comment._id} className="mb-4">
-                        <p className='pb-2 font-mono'><b>{comment.title}</b></p>
-                        <p className='tracking-wide leading-loose pb-2 indent-8 font-serif'>{comment.text}</p>
-                        <p><i>{DateTime.fromISO(comment.timestamp).toLocaleString(DateTime.DATE_MED)}</i></p>
-                    </div>
-                ))}
-            </div>
-        </section>
+        <div className="py-5 flex flex-col gap-2" id="blogs">
+            {comments.map(comment => (
+                <div key={comment._id}>
+                    <p className='text-base tracking-wide leading-loose pb-2font-serif text-lg'>{comment.user.username}: {comment.text}</p>
+                    <p className='text-sm'><i>{DateTime.fromISO(comment.timestamp).toLocaleString(DateTime.DATE_MED)}</i></p>
+                </div>
+            ))}
+        </div>
     );
 }

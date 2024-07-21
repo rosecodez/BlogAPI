@@ -8,13 +8,17 @@ const { body, validationResult } = require("express-validator");
 const getAllComments = async (req, res, next) => {
   const { postId } = req.params;
   try {
-    const comments = await Comment.find({ postId });
+    const comments = await Comment.find({ postId }).populate(
+      "user",
+      "username"
+    );
+    console.log(comments);
     res.json(comments);
   } catch (error) {
+    console.error("Error fetching comments:", error);
     res.status(500).json({ message: error.message });
   }
 };
-
 // Get a specific comment by id for a post
 const getCommentById = async (req, res, next) => {
   try {

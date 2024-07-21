@@ -48,7 +48,7 @@ export default function NewComment() {
   };
 
   return (
-    <form id="new-comment-form" className="flex flex-col bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit(onSubmit)}>
+    <form id="new-comment-form" className="flex flex-col bg-white shadow-md rounded px-8 pt-6 pb-8" onSubmit={handleSubmit(onSubmit)}>
       <label className="pt-4 block text-gray-700 text-sm font-bold mb-2" htmlFor="text">Text</label>
       <textarea className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" {...register("text", { required: true })} placeholder="Enter your comment text"></textarea>
       {errors.text && <span style={{ color: "red" }}>Text is required</span>}
