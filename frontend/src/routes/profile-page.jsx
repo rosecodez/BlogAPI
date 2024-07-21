@@ -1,9 +1,9 @@
 import Profile from "../components/profile";
 
-export default function ProfilePage() {
+export default function ProfilePage({ isAuthor }) {
     return (
         <div>
-            <Profile/>
+            <Profile isAuthor={isAuthor} />
         </div>
     );
 }

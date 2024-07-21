@@ -24,6 +24,7 @@ export default function Profile() {
     })
     .then(data => {
       setUsername(data.user.username);
+      setIsAuthor(data.user.username === "samuelt");
       setLoading(false);
     })
     .catch(error => {
@@ -32,11 +33,7 @@ export default function Profile() {
     });
   }, []);
 
-  useEffect(()=> {
-    if(username === "samuelt") {
-    setIsAuthor(true);
-  }
-  })
+
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;

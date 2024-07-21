@@ -16,6 +16,7 @@ import BlogCommentsPage from './post-comments-page.jsx';
 
 const Router = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
