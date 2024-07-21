@@ -54,7 +54,7 @@ export default function BlogDetail( {isAuthenticated, isAuthor}) {
         } catch (error) {
           setError(error.message);
         }
-      };
+    };
 
     const postTextWithBreaks = postText.replaceAll(".", ".\n");
 
@@ -67,9 +67,7 @@ export default function BlogDetail( {isAuthenticated, isAuthor}) {
             <div className="py-5" id="blogs">
                 
                 {isAuthor && (
-                    <div id="delete-post" className="mt-4">
-                        <button className="mt-6 bg-blue-500 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onClick={handleDelete}>Delete Post</button>
-                    </div>
+                    <button className="bg-red-500 hover:bg-red-900 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onClick={handleDelete}>Delete Post</button>
                 )}
 
                 <div id="post">
@@ -106,7 +104,7 @@ export default function BlogDetail( {isAuthenticated, isAuthor}) {
                 {showNewCommentForm && <NewComment />}
                 <div id="comments" className="border-solid rounded-lg border-4 border-indigo-200 border-t-indigo-300 p-2 mt-3">
                     <p className="text-lg">Comments</p>
-                    <BlogComments comments={comments} />
+                    <BlogComments isAuthor={isAuthor} comments={comments} />
                 </div>
             </div>
         </section>
