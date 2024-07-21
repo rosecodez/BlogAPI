@@ -114,7 +114,12 @@ exports.loginUserPost = async (req, res, next) => {
 };
 
 exports.logoutUser = asyncHandler(async (req, res, next) => {
-  req.logout(function (err) {});
+  req.logout((err) => {
+    if (err) {
+      return res.status(500).json({ message: "Logout failed" });
+    }
+    res.status(200).json({ message: "Logged out successfully" });
+  });
 });
 
 exports.getProfile = asyncHandler(async (req, res, next) => {

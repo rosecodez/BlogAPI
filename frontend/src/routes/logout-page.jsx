@@ -8,17 +8,20 @@ export default function LogoutPage({logout}) {
         const logoutUser = async () => {
             try {
                 const response = await fetch("http://localhost:3000/users/logout", {
-                    method: "POST",
+                    method: "GET",
                     headers: {
+                        "Authorization": `Bearer ${localStorage.getItem('token')}`,
                         "Content-Type": "application/json",
                     },
                     credentials: 'include',
                 });
+
                 if (!response.ok) {
                     throw new Error("Logout request failed");
                 }
+
                 localStorage.removeItem('token');
-                localStorage.removeItem("userId")
+                localStorage.removeItem('userId');
                 logout();
                 navigate("/");
             } catch (error) {
@@ -27,7 +30,7 @@ export default function LogoutPage({logout}) {
         };
 
         logoutUser();
-    }, [navigate]);
+    }, [navigate, logout]);
 
     return (
         <div>
