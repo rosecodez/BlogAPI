@@ -45,7 +45,7 @@ mongoose
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/posts", postsRouter);
-app.use("/comments", commentRouter);
+app.use("/posts", commentRouter);
 
 app.use((req, res, next) => {
   res.status(404).json({ message: "Not Found" });

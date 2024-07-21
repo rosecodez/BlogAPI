@@ -1,16 +1,17 @@
 const User = require("../models/user");
+const Post = require("../models/post");
 const Comment = require("../models/comment");
 const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
 
 // Get all comments for a specific post
 const getAllComments = async (req, res, next) => {
+  const { postId } = req.params;
   try {
-    const postId = req.params.postId;
     const comments = await Comment.find({ postId });
     res.json(comments);
-  } catch (err) {
-    next(err);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -30,9 +31,9 @@ const getCommentById = async (req, res, next) => {
 
 // Create a new comment for a post
 const createComment = async (req, res, next) => {
+  const { postId } = req.params;
+  const { text, userId } = req.body;
   try {
-    const { postId, text, userId } = req.body;
-
     const postExists = await Post.exists({ _id: postId });
     if (!postExists) {
       return res.status(404).json({ message: "Post not found" });
@@ -47,6 +48,7 @@ const createComment = async (req, res, next) => {
       postId,
       text,
       user: userId,
+      timestamp: new Date(),
     });
     await newComment.save();
     res.status(201).json(newComment);
