@@ -45,9 +45,30 @@ const Router = () => {
     }
   }, []);
 
-
+  // make sure that on login 'isAuthor' is set, in order to see "Create new post", with the desired authorization at /profile
   const login = () => {
     setIsAuthenticated(true);
+    const token = localStorage.getItem('token');
+    if (token) {
+      fetch('http://localhost:3000/users/profile', {
+        method: "GET",
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json"
+        },
+        mode: "cors"
+      })
+      .then(response => {
+        if (!response.ok) throw new Error("Failed to fetch user details");
+        return response.json();
+      })
+      .then(data => {
+        setIsAuthor(data.user.username === "samuelt");
+      })
+      .catch(error => {
+        console.error(error);
+      });
+    }
   };
   
   const signup = () => {

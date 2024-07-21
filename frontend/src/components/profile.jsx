@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 export default function Profile({ isAuthor }) {
   const [username, setUsername] = useState('');
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
   console.log("isAuthor: ", isAuthor)
+
   useEffect(() => {
     fetch(`http://localhost:3000/users/profile`, { 
       method: "GET",
