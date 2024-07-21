@@ -6,7 +6,7 @@ import comment from "../assets/comment.png";
 import BlogComments from "./post-comments";
 import NewComment from "./new-comment";
 
-export default function BlogDetail() {
+export default function BlogDetail( {isAuthenticated}) {
     const { postId } = useParams();
     const [post, setPost] = useState(null);
     const [postText, setPostText] = useState("");
@@ -63,12 +63,15 @@ export default function BlogDetail() {
                         </div>
                     </div>
                 </div>
-                <div id="leave-a-comment">
-                    <button        
-                        className="mt-6 bg-blue-500 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                        onClick={() => setShowNewCommentForm(!showNewCommentForm)}>{showNewCommentForm ? "Cancel" : "Leave a comment"}
-                    </button>
-                </div>
+                {isAuthenticated && (
+                    <div id="leave-a-comment">
+                        <button
+                            className="mt-6 bg-blue-500 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                            onClick={() => setShowNewCommentForm(!showNewCommentForm)}>
+                            {showNewCommentForm ? "Cancel" : "Leave a comment"}
+                        </button>
+                    </div>
+                )}
                 {showNewCommentForm && <NewComment />}
                 <div id="comments" className="border-solid rounded-lg border-4 border-indigo-200 border-t-indigo-300 p-2 mt-3">
                     <p className="text-lg">Comments</p>
