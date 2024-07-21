@@ -5,6 +5,7 @@ export default function Profile() {
   const [username, setUsername] = useState('');
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isAuthor, setIsAuthor] = useState(false);
 
   useEffect(() => {
     fetch(`http://localhost:3000/users/profile`, { 
@@ -29,7 +30,13 @@ export default function Profile() {
       setError(error.message);
       setLoading(false);
     });
-  }, []); 
+  }, []);
+
+  useEffect(()=> {
+    if(username === "samuelt") {
+    setIsAuthor(true);
+  }
+  })
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
@@ -37,8 +44,10 @@ export default function Profile() {
   return (
     <div>
       <h2 className="pt-5 text-2xl bold font-mono">Welcome, {username}!</h2>
-      <div id="profile-links" className="flex flex-row gap-2">
-        <Link to="/profile/new-blog">Create new post</Link>
+      <div id="profile-links" className="flex flex-row gap-2"> 
+        {isAuthor && (
+          <Link to="/profile/new-blog">Create new post</Link>
+        )}
         <Link to="/profile/logout">Log out</Link>
       </div>
       
