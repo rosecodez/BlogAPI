@@ -16,6 +16,7 @@ export default function BlogDetail( {isAuthenticated}) {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
     const [showNewCommentForm, setShowNewCommentForm] = useState(false);
+    const [isAuthor, setIsAuthor] = useState(false);
     
     useEffect(() => {
         fetch(`http://localhost:3000/posts/${postId}`, { mode: "cors" })
@@ -33,6 +34,27 @@ export default function BlogDetail( {isAuthenticated}) {
         .catch(error => setError(error.message))
         .finally(() => setLoading(false));
     }, [postId]);
+    
+    const handleDelete = async () => {
+        try {
+          const response = await fetch(`http://localhost:3000/posts/${postId}`, {
+            method: "DELETE",
+            headers: {
+              "Authorization": `Bearer ${localStorage.getItem('token')}`,
+              "Content-Type": "application/json"
+            },
+            mode: "cors"
+          });
+    
+          if (!response.ok) {
+            throw new Error("Failed to delete the post");
+          }
+    
+          navigate("/");
+        } catch (error) {
+          setError(error.message);
+        }
+    };
 
     const postTextWithBreaks = postText.replaceAll(".", ".\n");
 
@@ -43,6 +65,11 @@ export default function BlogDetail( {isAuthenticated}) {
     return (
         <section id="blog-posts-section">
             <div className="py-5" id="blogs">
+                {isAuthor && (
+                    <div id="delete-post" className="mt-4">
+                        <button className="mt-6 bg-blue-500 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onClick={handleDelete}>Delete Post</button>
+                    </div>
+                )}
                 <div id="post">
                     <p className="pb-2 font-mono"><b>{post.title}</b></p>
                     <p className="tracking-wide leading-loose pb-2 indent-8 font-serif">{postTextWithBreaks}</p>
