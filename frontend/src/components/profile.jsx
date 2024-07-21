@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-export default function Profile() {
+export default function Profile({ isAuthor }) {
   const [username, setUsername] = useState('');
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [isAuthor, setIsAuthor] = useState(false);
-
+  console.log("isAuthor: ", isAuthor)
   useEffect(() => {
     fetch(`http://localhost:3000/users/profile`, { 
       method: "GET",
@@ -24,7 +23,6 @@ export default function Profile() {
     })
     .then(data => {
       setUsername(data.user.username);
-      setIsAuthor(data.user.username === "samuelt");
       setLoading(false);
     })
     .catch(error => {
@@ -32,8 +30,6 @@ export default function Profile() {
       setLoading(false);
     });
   }, []);
-
-
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
@@ -47,7 +43,6 @@ export default function Profile() {
         )}
         <Link to="/profile/logout">Log out</Link>
       </div>
-      
     </div>
   );
 }

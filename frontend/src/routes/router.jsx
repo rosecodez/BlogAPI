@@ -16,13 +16,35 @@ import BlogCommentsPage from './post-comments-page.jsx';
 
 const Router = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  
+  const [isAuthor, setIsAuthor] = useState(false);
+
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
       setIsAuthenticated(true);
+      
+      // determine if user is author
+      fetch('http://localhost:3000/users/profile', {
+        method: "GET",
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json"
+        },
+        mode: "cors"
+      })
+      .then(response => {
+        if (!response.ok) throw new Error("Failed to fetch user details");
+        return response.json();
+      })
+      .then(data => {
+        setIsAuthor(data.user.username === "samuelt");
+      })
+      .catch(error => {
+        console.error(error);
+      });
     }
   }, []);
+
 
   const login = () => {
     setIsAuthenticated(true);
@@ -34,6 +56,7 @@ const Router = () => {
 
   const logout = () => {
     setIsAuthenticated(false);
+    setIsAuthor(false);
     localStorage.removeItem('token');
   };
 
@@ -50,7 +73,7 @@ const Router = () => {
         },
         {
           path: '/posts/:postId',
-          element: <BlogDetailPage isAuthenticated={isAuthenticated} />,
+          element: <BlogDetailPage isAuthenticated={isAuthenticated} isAuthor={isAuthor} />,
         },
         {
           path: '/posts/:postId/comments',
@@ -64,10 +87,8 @@ const Router = () => {
           path: "/login",
           element: <LoginPage login={login} />,
         },
-        {
-          path: "/profile",
-          element: isAuthenticated ? <ProfilePage /> : <LoginPage login={login} />,
-        },
+        { path: "/profile",
+          element: isAuthenticated ? <ProfilePage isAuthor={isAuthor} /> : <LoginPage login={login} /> },
         {
           path: "/profile/new-blog",
           element: isAuthenticated ? <NewBlogPage /> : <LoginPage login={login} />,

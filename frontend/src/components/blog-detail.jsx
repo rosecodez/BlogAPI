@@ -6,7 +6,7 @@ import comment from "../assets/comment.png";
 import BlogComments from "./post-comments";
 import NewComment from "./new-comment";
 
-export default function BlogDetail( {isAuthenticated}) {
+export default function BlogDetail( {isAuthenticated, isAuthor}) {
     const { postId } = useParams();
     const [post, setPost] = useState(null);
     const [postText, setPostText] = useState("");
@@ -16,7 +16,6 @@ export default function BlogDetail( {isAuthenticated}) {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
     const [showNewCommentForm, setShowNewCommentForm] = useState(false);
-    const [isAuthor, setIsAuthor] = useState(false);
     
     useEffect(() => {
         fetch(`http://localhost:3000/posts/${postId}`, { mode: "cors" })
