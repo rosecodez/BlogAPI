@@ -34,7 +34,7 @@ export default function NewComment() {
 
       const data = await response.json();
       console.log("New comment created:", data);
-      navigate(`/posts/${postId}`);
+      navigate(0);
     } catch (error) {
       console.error("Error creating new comment:", error.message);
       setNewCommentError(`Error creating new comment: ${error.message}`);
