@@ -12,7 +12,6 @@ const getAllComments = async (req, res, next) => {
       "user",
       "username"
     );
-    console.log(comments);
     res.json(comments);
   } catch (error) {
     console.error("Error fetching comments:", error);

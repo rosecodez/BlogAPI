@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { DateTime } from "luxon"; 
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import like from "../assets/like.png";
 import comment from "../assets/comment.png";
 import BlogComments from "./post-comments";
 import NewComment from "./new-comment";
+import { useNavigate } from 'react-router-dom';
 
 export default function BlogDetail( {isAuthenticated, isAuthor}) {
+    const navigate = useNavigate();
     const { postId } = useParams();
     const [post, setPost] = useState(null);
     const [postText, setPostText] = useState("");
@@ -37,23 +39,22 @@ export default function BlogDetail( {isAuthenticated, isAuthor}) {
     const handleDelete = async () => {
         try {
           const response = await fetch(`http://localhost:3000/posts/${postId}`, {
-            method: "DELETE",
+            method: 'DELETE',
             headers: {
-              "Authorization": `Bearer ${localStorage.getItem('token')}`,
-              "Content-Type": "application/json"
+              'Authorization': `Bearer ${localStorage.getItem('token')}`,
+              'Content-Type': 'application/json',
             },
-            mode: "cors"
+            mode: 'cors',
           });
-    
+      
           if (!response.ok) {
-            throw new Error("Failed to delete the post");
+            throw new Error(`Failed to delete the post: ${errorMessage}`);
           }
-    
-          navigate("/");
+          navigate('/'); 
         } catch (error) {
           setError(error.message);
         }
-    };
+      };
 
     const postTextWithBreaks = postText.replaceAll(".", ".\n");
 
@@ -64,11 +65,13 @@ export default function BlogDetail( {isAuthenticated, isAuthor}) {
     return (
         <section id="blog-posts-section">
             <div className="py-5" id="blogs">
+                
                 {isAuthor && (
                     <div id="delete-post" className="mt-4">
                         <button className="mt-6 bg-blue-500 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onClick={handleDelete}>Delete Post</button>
                     </div>
                 )}
+
                 <div id="post">
                     <p className="pb-2 font-mono"><b>{post.title}</b></p>
                     <p className="tracking-wide leading-loose pb-2 indent-8 font-serif">{postTextWithBreaks}</p>
@@ -89,6 +92,7 @@ export default function BlogDetail( {isAuthenticated, isAuthor}) {
                         </div>
                     </div>
                 </div>
+
                 {isAuthenticated && (
                     <div id="leave-a-comment">
                         <button
@@ -98,6 +102,7 @@ export default function BlogDetail( {isAuthenticated, isAuthor}) {
                         </button>
                     </div>
                 )}
+
                 {showNewCommentForm && <NewComment />}
                 <div id="comments" className="border-solid rounded-lg border-4 border-indigo-200 border-t-indigo-300 p-2 mt-3">
                     <p className="text-lg">Comments</p>
