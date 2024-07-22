@@ -45,7 +45,7 @@ const Router = () => {
     }
   }, []);
 
-  // make sure that on login 'isAuthor' is set, in order to see "Create new post", with the desired authorization at /profile
+  // make sure that on login 'isAuthor' is true, in order to see "Create new post", with the desired authorization at /profile
   const login = () => {
     setIsAuthenticated(true);
     const token = localStorage.getItem('token');
