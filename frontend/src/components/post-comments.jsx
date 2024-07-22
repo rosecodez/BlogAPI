@@ -62,7 +62,7 @@ export default function BlogComments({ isAuthor }) {
                         {comment.user.username}: {comment.text}
                     </p>
                     <p className='text-sm'>
-                        <i>{DateTime.fromISO(comment.timestamp).toLocaleString(DateTime.DATE_MED)}</i>
+                        <i>{DateTime.fromISO(comment.timestamp).toLocaleString({ weekday: 'short', month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit' })}</i>
                     </p>
                 </div>
             ))}

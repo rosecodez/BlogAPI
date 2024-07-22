@@ -29,11 +29,10 @@ export default function BlogsSection() {
     if (error) return <p>Error: {error}</p>;
 
 
-
     return (
         <section id="blog-posts-section">
             <b><h3 className='pt-5'>Latest posts</h3></b>
-            <div className="py-5"id="blogs">
+            <div className="flex flex-col gap-10 py-5"id="blogs">
                 {posts.map((post, index) => (
                     <div id="post" key={index}>
                         <a href={`/posts/${post._id}`}><p className='pb-2 font-mono'><b>{post.title}</b></p></a>
