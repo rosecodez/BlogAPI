@@ -12,6 +12,7 @@ const indexRouter = require("./routes/indexRouter");
 const usersRouter = require("./routes/usersRouter");
 const postsRouter = require("./routes/postsRouter");
 const commentRouter = require("./routes/commentsRouter");
+const authRoutes = require("./routes/auth");
 
 const app = express();
 
@@ -59,6 +60,7 @@ app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/posts", postsRouter);
 app.use("/posts", commentRouter);
+app.use("/auth", authRoutes);
 
 app.use((req, res, next) => {
   res.status(404).json({ message: "Not Found" });
