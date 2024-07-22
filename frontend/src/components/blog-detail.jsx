@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { DateTime } from "luxon"; 
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import like from "../assets/like.png";
 import comment from "../assets/comment.png";
 import BlogComments from "./post-comments";
@@ -67,7 +67,7 @@ export default function BlogDetail( {isAuthenticated, isAuthor}) {
             <div className="py-5" id="blogs">
                 
                 {isAuthor && (
-                    <button className="bg-red-500 hover:bg-red-900 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onClick={handleDelete}>Delete Post</button>
+                    <button className="bg-red-500 hover:bg-red-900 text-white font-bold py-2 mb-4 px-4 rounded focus:outline-none focus:shadow-outline" onClick={handleDelete}>Delete Post</button>
                 )}
 
                 <div id="post">
@@ -91,15 +91,18 @@ export default function BlogDetail( {isAuthenticated, isAuthor}) {
                     </div>
                 </div>
 
-                {isAuthenticated && (
-                    <div id="leave-a-comment">
+                {isAuthenticated ? 
+                    <div id="leave-a-comment" className="flex flex-col gap-3 items-baseline">
                         <button
                             className="mt-6 bg-blue-500 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                             onClick={() => setShowNewCommentForm(!showNewCommentForm)}>
                             {showNewCommentForm ? "Cancel" : "Leave a comment"}
                         </button>
                     </div>
-                )}
+                    :
+                    <a href="/login">Login to leave a comment</a>
+                }
+
 
                 {showNewCommentForm && <NewComment />}
                 <div id="comments" className="border-solid rounded-lg border-4 border-indigo-200 border-t-indigo-300 p-2 mt-3">

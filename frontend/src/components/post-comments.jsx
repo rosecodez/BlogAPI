@@ -49,7 +49,7 @@ export default function BlogComments({ isAuthor }) {
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
-    if (!comments.length) return <p>No comments found</p>;
+    if (!comments.length) return <p>No comments</p>;
 
     return (
         <div className="py-5 flex flex-col gap-2" id="blogs">
