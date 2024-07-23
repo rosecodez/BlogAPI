@@ -31,3 +31,11 @@ With this project I have practiced and applied:
   - when user logs out, the client will remove the JWT from storage
 
   ![alt text](image-4.png)
+
+- Project logic:
+  - visitors can only view, login required;
+  - any user can leave a comment;
+  - user can delete own comments only;
+  - only author can:
+    - create, edit, delete posts;
+    - delete comments;
