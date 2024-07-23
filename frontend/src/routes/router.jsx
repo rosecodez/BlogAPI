@@ -1,9 +1,13 @@
+// dependencies
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { checkAuthenticationToken, resetToken, isTokenExpired } from '../reset-token.jsx';
 
+// components
 import Navbar from '../components/navbar';
 
+// pages
 import ErrorPage from './error-page.jsx';
 import BlogsPage from './blogs-page.jsx';
 import BlogDetailPage from './blog-detail-page.jsx';
@@ -18,12 +22,24 @@ const Router = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isAuthor, setIsAuthor] = useState(false);
 
+  // check if token is expired
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token && !isTokenExpired(token)) {
+      setIsAuthenticated(true);
+    } else {
+      setIsAuthenticated(false);
+      localStorage.removeItem('token');
+      localStorage.removeItem('userId');
+    }
+  }, []);
+
+  // determine if user is author
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
       setIsAuthenticated(true);
       
-      // determine if user is author
       fetch('http://localhost:3000/users/profile', {
         method: "GET",
         headers: {
@@ -43,7 +59,7 @@ const Router = () => {
         console.error(error);
       });
     }
-  }, []);
+  }, [isAuthenticated]);
 
   // make sure that on login 'isAuthor' is true, in order to see "Create new post", with the desired authorization at /profile
   const login = () => {
@@ -73,12 +89,14 @@ const Router = () => {
   
   const signup = () => {
     setIsAuthenticated(true);
+    window.location.href = '/profile';
   }
 
   const logout = () => {
     setIsAuthenticated(false);
     setIsAuthor(false);
     localStorage.removeItem('token');
+    window.location.href = '/';
   };
 
   const router = createBrowserRouter([

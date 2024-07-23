@@ -14,8 +14,9 @@ router.post("/refresh-token", (req, res) => {
         .json({ message: "Invalid or expired refresh token" });
 
     const newAccessToken = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
-      expiresIn: "15m",
+      expiresIn: "1h",
     });
+
     res.json({ accessToken: newAccessToken });
   });
 });
