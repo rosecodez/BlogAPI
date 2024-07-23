@@ -49,11 +49,13 @@ export default function NewBlog() {
     return (
         <form id="new-blog-form" className='flex flex-col bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4' onSubmit={handleSubmit(onSubmit)}>
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="title">Title</label>
-            <input className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' type="text" {...register("title", { required: true })} placeholder="Enter your title" />
+            <input className='focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500
+            focus:invalid:border-pink-500 focus:invalid:ring-pink-500resize-y rounded-md shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' type="text" {...register("title", { required: true })} placeholder="Enter your title" />
             {errors.title && <span style={{ color: "red" }}>Title is required</span>}
 
             <label className="pt-4 block text-gray-700 text-sm font-bold mb-2" htmlFor="text">Text</label>
-            <textarea className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' {...register("text", { required: true })} placeholder="Enter your blog text"></textarea>
+            <textarea className='focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500
+            focus:invalid:border-pink-500 focus:invalid:ring-pink-500resize-y rounded-md shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' {...register("text", { required: true })} placeholder="Enter your blog text"></textarea>
             {errors.text && <span style={{ color: "red" }}>Text is required</span>}
 
             {newBlogError && <span className='pt-4' style={{ color: "red"}}>{newBlogError}</span>}

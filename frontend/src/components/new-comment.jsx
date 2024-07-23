@@ -50,7 +50,7 @@ export default function NewComment() {
   return (
     <form id="new-comment-form" className="flex flex-col bg-white shadow-md rounded px-8 pt-6 pb-8" onSubmit={handleSubmit(onSubmit)}>
       <label className="pt-4 block text-gray-700 text-sm font-bold mb-2" htmlFor="text">Text</label>
-      <textarea className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" {...register("text", { required: true })} placeholder="Enter your comment text"></textarea>
+      <textarea className="focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 focus:invalid:border-pink-500 focus:invalid:ring-pink-500resize-y rounded-md shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" {...register("text", { required: true })} placeholder="Enter your comment text"></textarea>
       {errors.text && <span style={{ color: "red" }}>Text is required</span>}
 
       {newCommentError && <span className="pt-4" style={{ color: "red" }}>{newCommentError}</span>}
