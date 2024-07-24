@@ -56,7 +56,7 @@ export default function BlogComments({ isAuthor }) {
             {comments.map(comment => (
                 <div key={comment._id} className="border p-2 mb-2">
                     {isAuthor && (
-                        <button className="bg-red-500 hover:bg-red-900 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onClick={() => handleDelete(comment._id)}>Delete Comment</button>
+                        <button className="bg-red-500 hover:bg-red-900 text-white font-bold py-2 mb-4 px-4 rounded focus:outline-none focus:shadow-outline" onClick={() => handleDelete(comment._id)}>Delete Comment</button>
                     )}
                     <p className='text-base tracking-wide leading-loose pb-2 font-serif text-lg'>
                         {comment.user.username}: {comment.text}
