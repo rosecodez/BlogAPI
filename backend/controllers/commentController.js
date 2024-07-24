@@ -73,9 +73,9 @@ const updateComment = async (req, res, next) => {
       return res.status(404).json({ message: "Comment not found" });
     }
 
-    comment.text = "hmm";
-    comment.timestamp = new Date();
-    comment.user = comment.user;
+    comment.text = req.body.text;
+    comment.timestamp = req.body.timestamp;
+    comment.user = req.body.userId;
 
     await comment.save();
 

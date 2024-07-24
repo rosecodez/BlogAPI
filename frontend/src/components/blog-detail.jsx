@@ -99,8 +99,6 @@ export default function BlogDetail( {isAuthenticated, isAuthor}) {
     };
     
     
-    const postTextWithBreaks = postText.replaceAll(".", ".\n");
-
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
     if (!post) return <p>No post found</p>;
